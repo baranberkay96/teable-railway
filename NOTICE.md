@@ -4,7 +4,7 @@ This repository is a Railway template package for Teable. It contains configurat
 
 | Component | License | Used as |
 |---|---|---|
-| Teable community edition 1.10.0 | AGPL-3.0 (`apps/nestjs-backend`, `apps/nextjs-app`), MIT (`packages/*`), Copyright (c) 2023-2025 Teable, Inc.; brand assets excluded from the AGPL (section 7(e) additional terms) | Official image `ghcr.io/teableio/teable-community:release.2026-11-23T07-19-00Z.1727@sha256:c730b2c2…`, extended with our start scripts; Teable's branding is left unchanged |
+| Teable community edition 1.10.0 | AGPL-3.0 (`apps/nestjs-backend`, `apps/nextjs-app`), MIT (`packages/*`), Copyright (c) 2023-2025 Teable, Inc.; brand assets excluded from the AGPL (section 7(e) additional terms) | Official image `ghcr.io/teableio/teable-community:release.2026-11-12T07-40-49Z.1724@sha256:30c7a5dc…`, extended with our start scripts; Teable's branding is left unchanged |
 | PostgreSQL 18 | PostgreSQL License | `ghcr.io/railwayapp-templates/postgres-ssl:18.6` (Railway) |
 | Redis 8.2 | RSALv2 / SSPLv1 / AGPLv3 | `redis:8.2.11` (official image, unmodified) |
 

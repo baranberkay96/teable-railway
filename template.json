@@ -1,0 +1,271 @@
+{
+  "name": "Teable 1.10 No-Code Postgres Database (Community, Redis)",
+  "idSeed": "Teable 1.10 No-Code Postgres Database (Community, Redis)",
+  "description": "Airtable-style spreadsheet UI on PostgreSQL, community edition.",
+  "category": "Other",
+  "tags": [
+    "teable",
+    "airtable-alternative",
+    "no-code",
+    "spreadsheet",
+    "database",
+    "postgres",
+    "redis",
+    "self-hosted"
+  ],
+  "image": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/teable.png",
+  "upstream": {
+    "repo": "teableio/teable",
+    "version": "1.10.0 (community image release.2026-11-23T07-19-00Z.1727)",
+    "license": "AGPL-3.0 (apps), MIT (packages)",
+    "images": {
+      "teable": "ghcr.io/teableio/teable-community:release.2026-11-23T07-19-00Z.1727@sha256:c730b2c2f07d7255e641b8cfd0617c335218edb8393420e2842d1ec283008480",
+      "postgres": "ghcr.io/railwayapp-templates/postgres-ssl:18.6@sha256:4fc833b43d2aaf6ecc9b18615f5533602b723a32d0e2efe2dae8ca0f7217c863",
+      "redis": "redis:8.2.11@sha256:b0b01167ff47bc3868e56a967895a26be4230891a1f42a78ab61cdd227accc8d"
+    },
+    "checked": "2026-11-24"
+  },
+  "services": {
+    "Teable": {
+      "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/teable.png",
+      "source": {
+        "repo": "baranberkay96/teable-railway",
+        "rootDirectory": "/services/teable"
+      },
+      "startCommand": null,
+      "preDeployCommand": null,
+      "healthcheckPath": "/health",
+      "healthcheckTimeout": 900,
+      "restartPolicyType": "ALWAYS",
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": true,
+      "targetPort": 3000,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/app/.assets"
+      },
+      "variables": {
+        "ADMIN_EMAIL": {
+          "defaultValue": "",
+          "description": "E-mail of the first account, which becomes the instance admin.",
+          "required": true
+        },
+        "ADMIN_PASSWORD": {
+          "defaultValue": "${{secret(21, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}Aa1",
+          "description": "Password of the first account (8+ chars, a letter and a digit). Change it in the app later.",
+          "required": false
+        },
+        "PORT": {
+          "defaultValue": "3000",
+          "description": "Port Teable listens on.",
+          "required": false
+        },
+        "PUBLIC_ORIGIN": {
+          "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+          "description": "Public URL. Change it when you add a custom domain.",
+          "required": false
+        },
+        "SECRET_KEY": {
+          "defaultValue": "${{secret(64, \"0123456789abcdef\")}}",
+          "description": "Root secret; session, JWT and encryption keys are derived from it. Do not change after first use.",
+          "required": false
+        },
+        "PRISMA_DATABASE_URL": {
+          "defaultValue": "${{Postgres.DATABASE_URL}}",
+          "description": "PostgreSQL connection string (private network).",
+          "required": false
+        },
+        "BACKEND_CACHE_PROVIDER": {
+          "defaultValue": "redis",
+          "description": "Cache, sessions and queues in Redis.",
+          "required": false
+        },
+        "BACKEND_CACHE_REDIS_URI": {
+          "defaultValue": "${{Redis.REDIS_URL}}/0?family=0",
+          "description": "Redis connection string (dual-stack lookup).",
+          "required": false
+        },
+        "TEABLE_DISALLOW_SIGNUP": {
+          "defaultValue": "true",
+          "description": "true: close public sign-up after the first admin is created. false: leave it open.",
+          "required": false
+        },
+        "BACKEND_MAIL_HOST": {
+          "defaultValue": "",
+          "description": "Optional SMTP host for invitations and notifications (outbound SMTP needs Railway Pro).",
+          "required": false
+        },
+        "BACKEND_MAIL_PORT": {
+          "defaultValue": "",
+          "description": "Optional SMTP port.",
+          "required": false
+        },
+        "BACKEND_MAIL_SECURE": {
+          "defaultValue": "",
+          "description": "true for implicit TLS (465).",
+          "required": false
+        },
+        "BACKEND_MAIL_SENDER": {
+          "defaultValue": "",
+          "description": "Sender address.",
+          "required": false
+        },
+        "BACKEND_MAIL_SENDER_NAME": {
+          "defaultValue": "Teable",
+          "description": "Sender name.",
+          "required": false
+        },
+        "BACKEND_MAIL_AUTH_USER": {
+          "defaultValue": "",
+          "description": "SMTP user name.",
+          "required": false
+        },
+        "BACKEND_MAIL_AUTH_PASS": {
+          "defaultValue": "",
+          "description": "SMTP password.",
+          "required": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "30",
+          "description": "Grace period for in-flight requests on redeploy.",
+          "required": false
+        }
+      }
+    },
+    "Postgres": {
+      "icon": "https://devicons.railway.app/i/postgresql.svg",
+      "source": {
+        "image": "ghcr.io/railwayapp-templates/postgres-ssl:18.6@sha256:4fc833b43d2aaf6ecc9b18615f5533602b723a32d0e2efe2dae8ca0f7217c863"
+      },
+      "startCommand": null,
+      "preDeployCommand": null,
+      "healthcheckPath": null,
+      "healthcheckTimeout": null,
+      "restartPolicyType": "ON_FAILURE",
+      "restartPolicyMaxRetries": 10,
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": false,
+      "targetPort": null,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/var/lib/postgresql/data"
+      },
+      "variables": {
+        "PGDATA": {
+          "defaultValue": "/var/lib/postgresql/data/pgdata",
+          "description": "Location where the database will be initialized",
+          "required": false
+        },
+        "PGHOST": {
+          "defaultValue": "${{RAILWAY_PRIVATE_DOMAIN}}",
+          "description": "Railway Private Domain Name.",
+          "required": false
+        },
+        "PGPORT": {
+          "defaultValue": "5432",
+          "description": "Port to connect to Postgres.",
+          "required": false
+        },
+        "PGUSER": {
+          "defaultValue": "${{ POSTGRES_USER }}",
+          "description": "Required variable for Data panel",
+          "required": false
+        },
+        "PGDATABASE": {
+          "defaultValue": "${{POSTGRES_DB}}",
+          "description": "Required variable for the data panel.",
+          "required": false
+        },
+        "PGPASSWORD": {
+          "defaultValue": "${{POSTGRES_PASSWORD}}",
+          "description": "Required variable for Data panel",
+          "required": false
+        },
+        "POSTGRES_DB": {
+          "defaultValue": "railway",
+          "description": "Default database created when image is started.",
+          "required": false
+        },
+        "DATABASE_URL": {
+          "defaultValue": "postgresql://${{PGUSER}}:${{POSTGRES_PASSWORD}}@${{RAILWAY_PRIVATE_DOMAIN}}:5432/${{PGDATABASE}}",
+          "description": "Private connection URL used by Baserow.",
+          "required": false
+        },
+        "POSTGRES_USER": {
+          "defaultValue": "postgres",
+          "description": "User to connect to Postgres DB",
+          "required": false
+        },
+        "SSL_CERT_DAYS": {
+          "defaultValue": "820",
+          "description": "SSL certificate expiry in days.",
+          "required": false
+        },
+        "POSTGRES_PASSWORD": {
+          "defaultValue": "${{ secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") }}",
+          "description": "Password to connect to DB",
+          "required": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "60",
+          "description": "Allow Postgres to cleanly shut down",
+          "required": false
+        }
+      }
+    },
+    "Redis": {
+      "icon": "https://cdn.sanity.io/images/sy1jschh/production/0ce0bfdcfbdbf69662b1116671f97c2dd788b655-157x157.svg",
+      "source": {
+        "image": "redis:8.2.11@sha256:b0b01167ff47bc3868e56a967895a26be4230891a1f42a78ab61cdd227accc8d"
+      },
+      "startCommand": "/bin/sh -c \"rm -rf $RAILWAY_VOLUME_MOUNT_PATH/lost+found/ && exec docker-entrypoint.sh redis-server --requirepass $REDIS_PASSWORD --save 60 1 --dir $RAILWAY_VOLUME_MOUNT_PATH\"",
+      "preDeployCommand": null,
+      "healthcheckPath": null,
+      "healthcheckTimeout": null,
+      "restartPolicyType": "ON_FAILURE",
+      "restartPolicyMaxRetries": 10,
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": false,
+      "targetPort": null,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/data"
+      },
+      "variables": {
+        "REDISHOST": {
+          "defaultValue": "${{RAILWAY_PRIVATE_DOMAIN}}",
+          "description": "Private network hostname of the Redis service.",
+          "required": false
+        },
+        "REDISPORT": {
+          "defaultValue": "6379",
+          "description": "Port that Redis listens on.",
+          "required": false
+        },
+        "REDISUSER": {
+          "defaultValue": "default",
+          "description": "Username for authenticating with Redis.",
+          "required": false
+        },
+        "REDIS_PASSWORD": {
+          "defaultValue": "${{ secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") }}",
+          "description": "Randomly generated password for authenticating with Redis.",
+          "required": false
+        },
+        "REDISPASSWORD": {
+          "defaultValue": "${{REDIS_PASSWORD}}",
+          "description": "Alias of REDIS_PASSWORD.",
+          "required": false
+        },
+        "REDIS_URL": {
+          "defaultValue": "redis://${{ REDISUSER }}:${{ REDIS_PASSWORD }}@${{ REDISHOST }}:${{ REDISPORT }}",
+          "description": "Private connection URL used by Baserow (cache, websockets, Celery broker).",
+          "required": false
+        }
+      }
+    }
+  }
+}

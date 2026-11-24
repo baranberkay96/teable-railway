@@ -44,14 +44,23 @@ Version label: app version 1.10.0 (`package.json`); Teable ships date-stamped `r
 
 ## Resources
 
-To be measured on the test deploy (see the report).
+Measured on Railway (2026-11-24, after admin bootstrap, a base with an attachment and two redeploys):
+
+| Service | Idle RAM | CPU idle |
+|---|---|---|
+| Teable | 0.64–0.89 GB | < 0.02 vCPU |
+| Postgres | 0.06–0.09 GB | < 0.01 |
+| Redis | 0.02–0.04 GB | < 0.01 |
+
+Total ≈ 1.0 GB idle → ≈ $10/month plus volumes. Teable sits close to Trial's 1 GB per-service limit; Hobby recommended.
 
 ## Verification checklist
 
-- [ ] All services SUCCESS; `/health` 200.
-- [ ] Admin sign-in; create a base, table and record; upload an attachment.
-- [ ] Stranger sign-up refused.
-- [ ] Odd values (`ADMIN_PASSWORD=abc`, bad e-mail) do not fail the deploy.
+- [x] All services SUCCESS, `/health` 200 (with the 2026-10-26 community release; two newer ones failed, see Design 1).
+- [x] First admin created by the helper, sign-up then disabled; admin sign-in 200 with `isAdmin: true`.
+- [x] Space, base, table, record; attachment uploaded and read back via its signed URL (bytes match).
+- [x] Stranger sign-up refused (400, "disallow sign up").
+- [x] Odd values (`ADMIN_PASSWORD=abc`, `ADMIN_EMAIL=Not An Email`, `SECRET_KEY=short`): SUCCESS.
 
 ## Open questions
 

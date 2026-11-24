@@ -18,7 +18,7 @@ Teable makes the first account that signs up the instance administrator. This te
 
 ## Dependencies for Teable Hosting
 
-- Teable community edition 1.10.0 (`teable-community` image, release of 2026-11-23, pinned by digest)
+- Teable community edition 1.10.0 (`teable-community` image, release of 2026-10-26, pinned by digest)
 - PostgreSQL 18 (Railway's `postgres-ssl` image)
 - Redis 8.2
 
@@ -48,7 +48,7 @@ Teable makes the first account that signs up the instance administrator. This te
 
 **Scaling and versions.** Teable stores attachments on its volume, so keep one replica. The image is pinned by tag and digest in `services/teable/Dockerfile`; Teable publishes a release almost every day. To upgrade, take a newer `release.*` tag of `ghcr.io/teableio/teable-community`, back up Postgres and redeploy; migrations run on start.
 
-**Resources.** Measured idle RAM is in TEMPLATE.md in the repository.
+**Resources.** Measured idle on Railway: Teable 0.6–0.9 GB, Postgres 0.06–0.09 GB, Redis 0.03 GB; about 1 GB in total, roughly $10–15 per month. Teable is close to the Trial plan's 1 GB per-service limit, so Hobby is recommended.
 
 **License.** Teable's apps are AGPL-3.0 and its packages MIT; the Teable name and logo are protected brand assets. The community image used here has no enterprise features or license checks. This is a community template; it is not affiliated with Teable, Inc.
 

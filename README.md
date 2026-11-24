@@ -1,5 +1,7 @@
 # Deploy and Host Teable with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/teable-110-no-code-postgres-database-com?referralCode=20H68q)
+
 Teable is a no-code database with a spreadsheet interface built directly on PostgreSQL: grid, form, kanban, gallery and calendar views, formulas, real-time collaboration and an API, while your data stays in real Postgres tables. This template runs the Teable 1.10 community edition with PostgreSQL 18 and Redis.
 
 ## About Hosting Teable

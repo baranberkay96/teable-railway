@@ -24,13 +24,13 @@ Version label: app version 1.10.0 (`package.json`); Teable ships date-stamped `r
 
 | Service | Source | Port | Healthcheck | Volume |
 |---|---|---|---|---|
-| Teable | repo `/services/teable` (`FROM ghcr.io/teableio/teable-community:release.2026-11-12T07-40-49Z.1724@sha256:30c7a5dc…`) | 3000 public | `/health` (900 s) | `/app/.assets` |
+| Teable | repo `/services/teable` (`FROM ghcr.io/teableio/teable-community:release.2026-10-26T07-49-03Z.1718@sha256:99604e6d…`) | 3000 public | `/health` (900 s) | `/app/.assets` |
 | Postgres | `postgres-ssl:18.6` | 5432 private | — | `/var/lib/postgresql/data` |
 | Redis | `redis:8.2.11` | 6379 private | — | `/data` |
 
 ## Design
 
-1. **Community (AGPL) image**, not the enterprise build the market templates use. Pinned to the 2026-11-12 community release: the newest one (`release.2026-11-23T07-19-00Z.1727`) crashed on Railway with `Cannot find module 'neverthrow'` (missing dependency in the community build).
+1. **Community (AGPL) image**, not the enterprise build the market templates use. Pinned to the 2026-10-26 community release: on Railway the newest one (`release.2026-11-23T07-19-00Z.1727`) crashed with `Cannot find module 'neverthrow'` and `release.2026-11-12T07-40-49Z.1724` never finished booting (`unregistered dependency token v2.commandExplain.previewPlannerRegistry`); the recent community builds miss parts of the new v2 core.
 2. **First admin (8.37):** Teable's first sign-up becomes the instance admin. `railway-bootstrap.mjs` polls `127.0.0.1:$PORT/health` every second and posts `/api/auth/signup` with `ADMIN_EMAIL` / `ADMIN_PASSWORD` immediately, i.e. while Railway's own healthcheck is still promoting the deployment, then sets `disallowSignUp` through `/api/admin/setting` with the new session. On later starts the sign-up is refused and nothing changes.
 3. **Secrets:** a single `SECRET_KEY` (Teable derives JWT, session, invitation and cipher keys from it per `secret-specs.ts`).
 4. **Deploy-form values (8.29):** empty optional variables dropped; bad `PUBLIC_ORIGIN` → Railway domain; short/missing `SECRET_KEY` → stable value derived from the database URL; invalid `ADMIN_EMAIL` → `admin@example.com`; a password Teable would reject → random (logged), so the deploy never fails.

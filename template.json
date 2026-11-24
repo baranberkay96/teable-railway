@@ -16,10 +16,10 @@
   "image": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/teable.png",
   "upstream": {
     "repo": "teableio/teable",
-    "version": "1.10.0 (community image release.2026-11-12T07-40-49Z.1724)",
+    "version": "1.10.0 (community image release.2026-10-26T07-49-03Z.1718)",
     "license": "AGPL-3.0 (apps), MIT (packages)",
     "images": {
-      "teable": "ghcr.io/teableio/teable-community:release.2026-11-12T07-40-49Z.1724@sha256:30c7a5dcd1e69364febf834c85b3b257897419613163e2fe29dbf1e2ab909db6",
+      "teable": "ghcr.io/teableio/teable-community:release.2026-10-26T07-49-03Z.1718@sha256:99604e6dd15e47184e167bf3e0006945d6d4ebb5f9449d62c443beefb301ce48",
       "postgres": "ghcr.io/railwayapp-templates/postgres-ssl:18.6@sha256:4fc833b43d2aaf6ecc9b18615f5533602b723a32d0e2efe2dae8ca0f7217c863",
       "redis": "redis:8.2.11@sha256:b0b01167ff47bc3868e56a967895a26be4230891a1f42a78ab61cdd227accc8d"
     },
